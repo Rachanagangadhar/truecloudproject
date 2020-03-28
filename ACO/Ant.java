@@ -113,7 +113,7 @@ import utils.Calculator;
         	}
         }
         if (selectVM==-1 | selectTask == -1)  
-            System.out.println("选择下一个虚拟机没有成功！");
+            System.out.println("Selecting the next virtual machine was unsuccessful!");
     		tabu.add(new Integer(selectTask));
 		tour.add(new position(selectVM, selectTask));
 		TL_task[selectVM] += cloudletList.get(selectTask).getCloudletLength();  		
