@@ -12,14 +12,14 @@ public class ACO {
 	public class position{
 		public int vm;
 		public int task;
-		public position(int a, int b){
+		public position(int a, int b){//coordinates of ????????????????????
 			vm = a;
 			task = b;
 		}
 	}
 	private List<Ant> ants;//Defining ant colony
 	private int antcount;//Number of ants
-	private int Q = 100;
+	private int Q = 100;//#############why is dis q for??
 	private double[][] pheromone;//Pheromone matrix
 	private double[][] Delta;//Total pheromone increment
 	private int VMs;//Number of virtual machines
@@ -30,7 +30,8 @@ public class ACO {
 	private List<? extends Vm> vmList;
 	/**
 	 * Initialization matrix
-* @param antNum is the number of ants to be used in the system
+* @param antNum is the number of ants to be used in the system which will assign besttour[nooftasks] all as(-1,-1),pheromone[vms][tasks] as 0.1,ant array n starting (vm,task)
+* for each ant viz 5 here
 	 */
 	public void init(int antNum, List<? extends Cloudlet> list1, List<? extends Vm> list2){
 		//cloudletList = new ArrayList<? extends Cloudlet>;
@@ -56,7 +57,9 @@ public class ACO {
 		//Randomly placed ants
         for(int i=0; i<antcount; i++){  
             ants.add(new Ant());  
-            ants.get(i).RandomSelectVM(cloudletList, vmList);
+            ants.get(i).RandomSelectVM(cloudletList, vmList);//goes to ant.java where it assigns one cloudlet to one vmso by d end we would hv assigned 5 cloudlets to 
+            //5 vms that will be d starting position of the ants which are 5 in number these starting position is recorded in tour matrix,,
+            //in tbu matrix firstvm would be there for now whatever i hv got
         }
 	}
 	/**
@@ -65,12 +68,13 @@ public class ACO {
 	 */
 	public void run(int maxgen){
 		for(int runTime=0; runTime<maxgen; runTime++){
-			System.out.println("#"+runTime+"times：");
+			System.out.println(runTime+"th time：####################################################");
 			//The process of each ant moving
 			for(int i=0; i<antcount; i++){
 				for(int j=1; j<tasks; j++){	
 					ants.get(i).SelectNextVM(pheromone);
-				}
+				}         
+
 			}
 			for(int i=0; i<antcount; i++){
 				System.out.println("number"+i+"ants");

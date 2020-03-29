@@ -20,7 +20,7 @@ public class ACODatacenterBroker extends DatacenterBroker {
     /**
      * bind Cloudlet to Vm based on ACO
      * @param antcount 蚂蚁个数
-     * @param maxgen 最大迭代次数
+     * @param maxgen The maximum number of iterations
      * **/
     //public void init(int antNum, List<? extends Cloudlet> cloudletList, List<? extends Vm> vmList)
     //public void run(int maxgen)
@@ -28,8 +28,8 @@ public class ACODatacenterBroker extends DatacenterBroker {
         long time = System.currentTimeMillis();
         ACO aco;
         aco = new ACO();
-        aco.init(antcount, cloudletList, vmList);
-        aco.run(maxgen);
+        aco.init(antcount, cloudletList, vmList);//gotoaco.java
+        aco.run(maxgen);//go to aco.java
         aco.ReportResult();
         double[] bestposition = new double[Constants.NO_OF_TASKS];
         for (int i = 0; i < cloudletList.size(); i++) {

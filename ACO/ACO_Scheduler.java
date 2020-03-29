@@ -57,11 +57,28 @@ public class ACO_Scheduler
             GenerateMatrices GM = new GenerateMatrices(vmList);
             commMatrix = GM.getcommMatrix();
             execMatrix = GM.getexecMatrix();
+            System.out.println("commmatrix");
+            for(int i=0;i<Constants.NO_OF_TASKS;i++) {
+            	for(int j=0;j<Constants.NO_OF_VMS;j++) {
+            		System.out.print(commMatrix[i][j]+" ");
+            	}
+            	System.out.println();
+            }
+            System.out.println("execmatrix");
+            for(int i=0;i<Constants.NO_OF_TASKS;i++) {
+            	for(int j=0;j<Constants.NO_OF_VMS;j++) {
+            		System.out.print(execMatrix[i][j]+" ");
+            	}
+            	System.out.println();
+            }
+            
+            
+            //submitting vms and cloudlets
             broker.submitVmList(vmList);
-//            broker.setMapping(mapping);
+            //            broker.setMapping(mapping);
             broker.submitCloudletList(cloudletList);
 
-            broker.RunACO(5, 2);
+            broker.RunACO(5, 2);//in acodatacenterbroker
             // Fifth step: Starts the simulation
             CloudSim.startSimulation();
 
@@ -116,26 +133,34 @@ public class ACO_Scheduler
             long fileSize = 1000;
             long outputSize = 1000;
             UtilizationModel utilizationModel = new UtilizationModelFull();
-
-            while ((data = br.readLine()) != null)
-            {
-                System.out.println(data);
-                String[] taskLength=data.split("\t");//tasklength[i]是任务执行的耗费（指令数量）
-                for(int j=0;j<20;j++){
-                    Cloudlet task=new Cloudlet(index+j, (long) Double.parseDouble(taskLength[j]), pesNumber, fileSize,
-                            outputSize, utilizationModel, utilizationModel,
-                            utilizationModel);
-                    task.setUserId(brokerId);
-                    cloudletList.add(task);
-                    if(cloudletList.size()==taskNum)
-                    {
-                        br.close();
-                        return;
-                    }
-                }
-                //20 cloudlets each line in the file cloudlets.txt.
-                index+=20;
+            data = br.readLine();
+            String[] taskLength=data.split("\t");
+            for(int i=0;i<Constants.NO_OF_TASKS;i++) {
+            Cloudlet task=new Cloudlet(i, (long) Double.parseDouble(taskLength[i]), pesNumber, fileSize,
+                  outputSize, utilizationModel, utilizationModel,
+                  utilizationModel);
+         task.setUserId(brokerId);   
+         cloudletList.add(task);
             }
+//            while ((data = br.readLine()) != null)
+//            {
+//                System.out.println(data);
+//                String[] taskLength=data.split("\t");//tasklength[i]是任务执行的耗费（指令数量）
+//                for(int j=0;j<20;j++){
+//                    Cloudlet task=new Cloudlet(index+j, (long) Double.parseDouble(taskLength[j]), pesNumber, fileSize,
+//                            outputSize, utilizationModel, utilizationModel,
+//                            utilizationModel);
+//                    task.setUserId(brokerId);
+//                    cloudletList.add(task);
+//                    if(cloudletList.size()==taskNum)
+//                    {
+//                        br.close();
+//                        return;
+//                    }
+//                }
+//                //20 cloudlets each line in the file cloudlets.txt.
+//                index+=20;
+//            }
         }
         catch (IOException e)
         {

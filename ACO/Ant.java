@@ -45,11 +45,15 @@ import utils.Calculator;
 		tour=new ArrayList<position>();
 		
 		//Randomly select the position of ants
-		int firstVM = (int)(VMs*Math.random());
+		double a=Math.random();
+		System.out.println("this is random number"+a);
+		int firstVM = (int)(VMs*a);
 		int firstExecute = (int)(tasks*Math.random());
 		tour.add(new position(firstVM, firstExecute));
 		tabu.add(new Integer(firstExecute));
 		TL_task[firstVM] += cloudletList.get(firstExecute).getCloudletLength();
+        System.out.println(tabu); 
+
 	}
 	/**
 	  * calculate the expected execution time and transfer time of the task on vm
@@ -73,7 +77,8 @@ import utils.Calculator;
 * @param pheromone global pheromone information
 	  */
 	  public void SelectNextVM(double[][] pheromone){
-		  double[][] p;//每个节点被选中的概率
+		  
+		  double[][] p;//Probability of each node being selected 
 		  p = new double[VMs][tasks];
 		  double alpha = 1.0;
 		  double beta = 1.0;
@@ -81,7 +86,7 @@ import utils.Calculator;
 		  //  Denominator part of calculation formula
 		  for(int i=0; i<VMs; i++){
 			  for(int j=0; j<tasks; j++){
-				  if(tabu.contains(new Integer(j))) continue;
+				  if(tabu.contains(new Integer(j))) continue;//raaaaaaa may be here what i am getting is whichever task is assigned a vm already should not be considered
 				  double x = Math.pow(pheromone[i][j],alpha);
 				  double y = Math.pow(1/Dij(i,j),beta);
 				  sum+= x*y;
@@ -113,7 +118,7 @@ import utils.Calculator;
         	}
         }
         if (selectVM==-1 | selectTask == -1)  
-            System.out.println("选择下一个虚拟机没有成功！");
+            System.out.println("Selecting the next virtual machine was unsuccessful!");
     		tabu.add(new Integer(selectTask));
 		tour.add(new position(selectVM, selectTask));
 		TL_task[selectVM] += cloudletList.get(selectTask).getCloudletLength();  		
